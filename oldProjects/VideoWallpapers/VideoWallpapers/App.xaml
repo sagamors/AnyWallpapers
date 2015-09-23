@@ -1,0 +1,17 @@
+﻿<Application x:Class="VideoWallpapers.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:audioAndVideo="clr-namespace:WpfTutorialSamples.Audio_and_Video"
+             xmlns:local="clr-namespace:VideoWallpapers"
+             xmlns:xamlExtensions="clr-namespace:VideoWallpapers.XamlExtensions"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}" />
+        </Style>
+
+        <Style x:Key="MainWindowStyle"
+               BasedOn="{StaticResource {x:Type Window}}"
+               TargetType="{x:Type audioAndVideo:MainWindow}" />
+    </Application.Resources>
+</Application>

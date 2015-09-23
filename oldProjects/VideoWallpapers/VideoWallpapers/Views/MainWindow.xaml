@@ -1,0 +1,88 @@
+﻿<Window x:Class="WpfTutorialSamples.Audio_and_Video.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cb="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:constrols="clr-namespace:VideoWallpapers.Constrols"
+        xmlns:viewModels="clr-namespace:VideoWallpapers.ViewModels"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        Title="VideoWallpapers"
+        Width="720"
+        Height="581.55"
+        DataContext="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}}"
+        Style="{StaticResource MainWindowStyle}">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="{Binding Path=MinHeight, ElementName=ScreenViewer}" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Adjust the screen">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <constrols:ScreenViewerControl x:Name="ScreenViewer" MinHeight="200" Padding="10" />
+                    <CheckBox Grid.Row="1" Content="Separate mode"/>
+                    <GroupBox Grid.Row="2" Header="Options:">
+                        <StackPanel>
+                            <TextBlock Text="Type:"/>
+                            <ComboBox IsSynchronizedWithCurrentItem="True">
+                                <system:String>Program</system:String>
+                                <system:String>File</system:String>
+                                <system:String>Video</system:String>
+                            </ComboBox>
+                            <Button >Browse</Button>
+                            <TextBlock Text="Object position:"/>
+                            <ComboBox IsSynchronizedWithCurrentItem="True">
+                                <system:String>Center</system:String>
+                                <system:String>Tile</system:String>
+                                <system:String>Fit</system:String>
+                                <system:String>Fill</system:String>
+                                <system:String>Stretch</system:String>
+                            </ComboBox>         
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+            <Label Grid.Row="1">Available screens:</Label>
+            <GroupBox Grid.Row="2" Header="Options:">
+                <StackPanel>
+                    <Border CornerRadius="30" Background="Green" Width="100" Height="100" Opacity="0.5"> 
+                        <Border.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <StackPanel>
+                                    <Border 
+                                        Background="Black"
+                                        SnapsToDevicePixels="True"
+                                        CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
+                                        Width="100"
+                                        Height="100"
+                                        />
+                                        <Border 
+                                        Background="Black"
+                                        SnapsToDevicePixels="True"
+                                        CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
+                                        Width="100"
+                                        Height="100"
+                                        />
+                                    </StackPanel>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.OpacityMask>
+                        <TextBlock Text="asdas das d asd a sd a sda" />
+                    </Border>
+                    <CheckBox Content="One for all screens" />
+                </StackPanel>
+            </GroupBox>
+            <ComboBox Grid.Row="3">
+                <Label>1</Label>
+            </ComboBox>
+        </Grid>
+    </ScrollViewer>
+</Window>

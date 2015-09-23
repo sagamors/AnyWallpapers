@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="VideoWallpapers.ViewModels.WallpaperBase">
+    <Position X="2.75" Y="5.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAgAAABAEQAAAAAAAAAAQAACAgAAAA=</HashCode>
+      <FileName>ViewModels\ScreenViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VideoWallpapers.ViewModels.ScreenViewModel">
+    <Position X="1.75" Y="2.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAABAAAAEAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ViewModels\ScreenViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Wallpaper" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="VideoWallpapers.ViewModels.MainWindowViewModel">
+    <Position X="7.75" Y="2.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAQCAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SelectedScreen" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
