@@ -1,0 +1,24 @@
+﻿<Window x:Class="AnyWallpapers.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnyWallpapers"
+        xmlns:viewModels="clr-namespace:AnyWallpapers.ViewModels"
+        xmlns:views="clr-namespace:AnyWallpapers.Views"
+        mc:Ignorable="d"
+        Title="MainView" Height="350" Width="525"
+        >
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <views:ScreensView Grid.Row="0"/>
+        <Canvas Width="100" Height="100">
+        </Canvas>
+    </Grid>
+</Window>
