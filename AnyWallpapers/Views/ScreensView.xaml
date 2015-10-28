@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyWallpapers.Views"
+             xmlns:controls="clr-namespace:AnyWallpapers.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              >
@@ -16,16 +17,25 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Width="{Binding Width}" Height="{Binding Height}" Content="{Binding Path=(ItemsControl.AlternationIndex), 
-                       RelativeSource={RelativeSource AncestorType=ContentPresenter}}"/>
+                    <controls:ScreenItem ScreenHeight="{Binding Height}" 
+                                         ScreenWidth="{Binding Width}" 
+                                         Background="Gainsboro" 
+                                         Scale="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Scale}"
+                                         
+                                         >
+                        <controls:ScreenItem.Header>
+                            <Border Background="Gainsboro"></Border>
+                            <!--Header="{Binding Path=(ItemsControl.AlternationIndex), RelativeSource={RelativeSource AncestorType=ContentPresenter}}"-->
+                        </controls:ScreenItem.Header>
+                    </controls:ScreenItem>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
+            <!--<ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Canvas.Left" Value="{Binding Path=Origin.X}" />
                     <Setter Property="Canvas.Top" Value="{Binding Path= Origin.Y}" />
                 </Style>
-            </ItemsControl.ItemContainerStyle>
+                </ItemsControl.ItemContainerStyle>-->
         </ItemsControl>
     </Grid>
 </UserControl>

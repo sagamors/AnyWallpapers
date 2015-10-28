@@ -12,12 +12,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Viewbox>
-                            
-                        </Viewbox>
-<!--                        <Canvas Background="Red">
-                            
-                        </Canvas>-->
+                        <ContentPresenter/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

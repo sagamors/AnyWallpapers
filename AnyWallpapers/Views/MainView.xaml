@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:AnyWallpapers"
         xmlns:viewModels="clr-namespace:AnyWallpapers.ViewModels"
         xmlns:views="clr-namespace:AnyWallpapers.Views"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainView" Height="350" Width="525"
         >
+    <Window.Resources>
+        <Thickness x:Key="MarginSettings">3,3,3,0</Thickness>
+    </Window.Resources>
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
@@ -16,9 +20,32 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <views:ScreensView Grid.Row="0"/>
-        <Canvas Width="100" Height="100">
-        </Canvas>
+        <GroupBox Grid.Row="1" Padding="3">
+            <StackPanel>
+                <TextBlock Text="Type of content"></TextBlock>
+                <ComboBox Margin="{StaticResource MarginSettings}">
+                    <ComboBoxItem>Application</ComboBoxItem>
+                    <ComboBoxItem>Video</ComboBoxItem>
+                    <ComboBoxItem></ComboBoxItem>
+                </ComboBox>
+                <Button Margin="{StaticResource MarginSettings}" Content="Browse"></Button>
+                <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:"/>
+                <ComboBox Margin="{StaticResource MarginSettings}" 
+                          IsSynchronizedWithCurrentItem="True">
+                    <system:String>Center</system:String>
+                    <system:String>Tile</system:String>
+                    <system:String>Fit</system:String>
+                    <system:String>Fill</system:String>
+                    <system:String>Stretch</system:String>
+                    <system:String>Custom</system:String>
+                </ComboBox>
+                <CheckBox Margin="{StaticResource MarginSettings}" Content="Single content"></CheckBox>
+            </StackPanel>
+        </GroupBox>
+        <Button Margin="3" Grid.Row="2" Content="Apply"/>
+     
     </Grid>
 </Window>

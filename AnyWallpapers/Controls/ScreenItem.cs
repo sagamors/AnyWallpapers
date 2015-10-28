@@ -1,49 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AnyWallpapers.Controls
-{
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:AnyWallpapers.Controls"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:AnyWallpapers.Controls;assembly=AnyWallpapers.Controls"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Browse to and select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:ScreenItem/>
-    ///
-    /// </summary>
+{ 
     public class ScreenItem : HeaderedItemsControl
     {
         public static readonly DependencyProperty ScreenHeightProperty = DependencyProperty.Register(
@@ -64,22 +23,65 @@ namespace AnyWallpapers.Controls
             set { SetValue(ScreenWidthProperty, value); }
         }
 
-        public static readonly DependencyProperty OriginXProperty = DependencyProperty.Register(
-            "OriginX", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty ScreenXProperty = DependencyProperty.Register(
+            "ScreenX", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double)));
 
-        public double OriginX
+        public double ScreenX
         {
-            get { return (double) GetValue(OriginXProperty); }
-            set { SetValue(OriginXProperty, value); }
+            get { return (double) GetValue(ScreenXProperty); }
+            set { SetValue(ScreenXProperty, value); }
         }
 
-        public static readonly DependencyProperty OriginYProperty = DependencyProperty.Register(
-            "OriginY", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty ScreenYProperty = DependencyProperty.Register(
+            "ScreenY", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double)));
 
-        public double OriginY
+        public double ScreenY
         {
-            get { return (double) GetValue(OriginYProperty); }
-            set { SetValue(OriginYProperty, value); }
+            get { return (double) GetValue(ScreenYProperty); }
+            set { SetValue(ScreenYProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
+            "Scale", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double), (o, args) =>
+            {
+                var control = (ScreenItem)o;
+                control.Width = control.ScreenWidth/control.Scale;
+                control.Height = control.ScreenHeight / control.Scale;
+            }));
+
+        public double Scale
+        {
+            get { return (double) GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
+        }
+
+        internal static readonly DependencyPropertyKey XKey = DependencyProperty.RegisterReadOnly("X", typeof(double), typeof(ScreenItem), new PropertyMetadata(double.NaN,
+            (o, args) =>
+            {
+                var control = (ScreenItem) o;
+                Canvas.SetLeft(control, control.X);
+            }));
+        public static readonly DependencyProperty XProperty = XKey.DependencyProperty;
+
+        public double X
+        {
+            get { return (double)GetValue(XProperty); }
+            protected set { SetValue(XKey, value); }
+        }
+
+        internal static readonly DependencyPropertyKey YKey = DependencyProperty.RegisterReadOnly("Y", typeof(double), typeof(ScreenItem), new PropertyMetadata(double.NaN,
+            (o, args) =>
+            {
+                var control = (ScreenItem)o;
+                Canvas.SetTop(control, control.Y);
+            }));
+
+        public static readonly DependencyProperty YProperty = YKey.DependencyProperty;
+
+        public double Y
+        {
+            get { return (double)GetValue(YProperty); }
+            protected set { SetValue(YKey, value); }
         }
 
         static ScreenItem()
