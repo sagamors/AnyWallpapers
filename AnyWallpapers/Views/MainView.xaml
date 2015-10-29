@@ -7,6 +7,7 @@
         xmlns:viewModels="clr-namespace:AnyWallpapers.ViewModels"
         xmlns:views="clr-namespace:AnyWallpapers.Views"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:AnyWallpapers.Controls"
         mc:Ignorable="d"
         Title="MainView" Height="350" Width="525"
         >
@@ -22,7 +23,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <views:ScreensView Grid.Row="0"/>
+        <controls:ScreensViewer Grid.Row="0" 
+                                x:Name="ScreensViewer"/>
         <GroupBox Grid.Row="1" Padding="3">
             <StackPanel>
                 <TextBlock Text="Type of content"></TextBlock>

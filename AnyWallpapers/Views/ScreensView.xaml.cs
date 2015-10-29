@@ -31,13 +31,22 @@ namespace AnyWallpapers.Views
             set { SetValue(ItemsProperty, value); }
         }
 
-        public static readonly DependencyProperty OriginOffsetProperty = DependencyProperty.Register(
-            "OriginOffset", typeof (double), typeof (ScreensView), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty OriginXOffsetProperty = DependencyProperty.Register(
+            "OriginXOffset", typeof (double), typeof (ScreensView), new PropertyMetadata(default(double)));
 
-        public double OriginOffset
+        public double OriginXOffset
         {
-            get { return (double) GetValue(OriginOffsetProperty); }
-            set { SetValue(OriginOffsetProperty, value); }
+            get { return (double) GetValue(OriginXOffsetProperty); }
+            set { SetValue(OriginXOffsetProperty, value); }
+        }
+
+        public static readonly DependencyProperty OriginYOffsetProperty = DependencyProperty.Register(
+            "OriginYOffset", typeof (double), typeof (ScreensView), new PropertyMetadata(default(double)));
+
+        public double OriginYOffset
+        {
+            get { return (double) GetValue(OriginYOffsetProperty); }
+            set { SetValue(OriginYOffsetProperty, value); }
         }
         
         public ScreensView()

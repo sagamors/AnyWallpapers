@@ -36,6 +36,8 @@ namespace AnyWallpapers.ViewModels
             Screen = screen;
             Content = content;
         }
+
+
     }
 
     public interface IDispayedContent

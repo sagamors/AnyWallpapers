@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ScreensViewer.cs" />
     <Compile Include="Views\ScreensView.xaml.cs">
       <DependentUpon>ScreensView.xaml</DependentUpon>
     </Compile>

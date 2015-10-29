@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace AnyWallpapers.ViewModels
 {
-    class MainViewModel : ViewModelBase
+   public  class MainViewModel : ViewModelBase
     {
 /*        public static MainViewModel Instance { get; } = new MainViewModel();*/
         public ScreenViewModel SelectedScreen { set; get; }
