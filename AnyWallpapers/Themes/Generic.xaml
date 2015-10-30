@@ -1,33 +1,42 @@
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:AnyWallpapers"
-    xmlns:controls="clr-namespace:AnyWallpapers.Controls"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
-    
-    <SolidColorBrush x:Key="ScreenItem.Background.Color" Color="DeepSkyBlue"/>
-    <SolidColorBrush x:Key="ScreenItem.Border.Color" Color="DodgerBlue"/>
-    <SolidColorBrush x:Key="ScreenItem.Text.Color" Color="GhostWhite"/>
-    <Thickness x:Key="ScreenItem.Border.Thickness" Bottom="1" Left="1" Right="1" Top="1"/>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:AnyWallpapers.Controls"
+                    xmlns:local="clr-namespace:AnyWallpapers"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <SolidColorBrush x:Key="ScreenItem.Background.Color" Color="DeepSkyBlue" />
+    <SolidColorBrush x:Key="ScreenItem.Border.Color" Color="DodgerBlue" />
+    <SolidColorBrush x:Key="ScreenItem.Text.Color" Color="GhostWhite" />
+    <SolidColorBrush x:Key="ScreenItem.Backgound.MouseOver"
+                     Opacity="1.0"
+                     Color="DarkGray" />
+    <SolidColorBrush x:Key="ScreenItem.Backgound.Selected"
+                     Opacity="1.0"
+                     Color="LightSkyBlue" />
+
+    <Thickness x:Key="ScreenItem.Border.Thickness"
+               Bottom="1"
+               Left="1"
+               Right="1"
+               Top="1" />
 
     <Style TargetType="{x:Type controls:ScreenItem}">
-        <Setter Property="Background" Value="{StaticResource ScreenItem.Background.Color}"></Setter>
+        <Setter Property="Background" Value="{StaticResource ScreenItem.Background.Color}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ScreenItem}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            x:Name="Border"
-                            >
-                        <ContentPresenter/>
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="DarkGray"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.MouseOver}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.Selected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -39,47 +48,53 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ScreensViewer}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            x:Name="Border"
-                            >
-                        <ItemsControl x:Name="PART_ItemsControl" ItemsSource="{Binding Items,RelativeSource={RelativeSource Mode=TemplatedParent}}" 
-                                      AlternationCount="100" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ItemsControl x:Name="PART_ItemsControl"
+                                      HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      HorizontalAlignment="Center">
+                                      AlternationCount="100"
+                                      ItemsSource="{Binding Items,
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas/>
+                                    <Canvas />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <controls:ScreenItem ScreenHeight="{Binding Bounds.Height}" 
-                                         ScreenX="{Binding Bounds.X}"
-                                         ScreenY="{Binding Bounds.Y}"
-                                         ScreenWidth="{Binding Bounds.Width}" 
-                                         Scale="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer}, Path=Scale}"
-                                         XOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer}, Path=OriginXOffset}"
-                                         YOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer}, Path=OriginYOffset}"
-                                         >
+                                    <controls:ScreenItem Scale="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
+                                                                         Path=Scale}"
+                                                         ScreenHeight="{Binding Bounds.Height}"
+                                                         ScreenWidth="{Binding Bounds.Width}"
+                                                         ScreenX="{Binding Bounds.X}"
+                                                         ScreenY="{Binding Bounds.Y}"
+                                                         XOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
+                                                                           Path=OriginXOffset}"
+                                                         YOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
+                                                                           Path=OriginYOffset}">
                                         <controls:ScreenItem.RenderTransform>
-                                            <TranslateTransform X="{Binding Path=X, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" 
-                                                                Y="{Binding Path=Y, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}"/>
+                                            <TranslateTransform X="{Binding Path=X, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" Y="{Binding Path=Y, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" />
                                         </controls:ScreenItem.RenderTransform>
-                                        <Label BorderThickness="{StaticResource ScreenItem.Border.Thickness}"  
-                                               Foreground="{StaticResource ScreenItem.Text.Color}" 
-                                               HorizontalContentAlignment="Center" 
-                                               VerticalContentAlignment="Center" 
-                                               Content="{Binding Path=(ItemsControl.AlternationIndex), Mode=OneWay, RelativeSource={RelativeSource AncestorLevel=2,Mode=FindAncestor, AncestorType=ContentPresenter}}"/>
+                                        <Label HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center"
+                                               BorderThickness="{StaticResource ScreenItem.Border.Thickness}"
+                                               Content="{Binding Path=(ItemsControl.AlternationIndex),
+                                                                 Mode=OneWay,
+                                                                 RelativeSource={RelativeSource AncestorLevel=2,
+                                                                                                Mode=FindAncestor,
+                                                                                                AncestorType=ContentPresenter}}"
+                                               Foreground="{StaticResource ScreenItem.Text.Color}" />
                                     </controls:ScreenItem>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Border>
- 
+
                 </ControlTemplate>
-                
+
             </Setter.Value>
         </Setter>
     </Style>

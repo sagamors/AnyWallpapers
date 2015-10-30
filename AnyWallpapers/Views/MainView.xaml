@@ -1,42 +1,43 @@
 ﻿<Window x:Class="AnyWallpapers.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:AnyWallpapers.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnyWallpapers"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModels="clr-namespace:AnyWallpapers.ViewModels"
         xmlns:views="clr-namespace:AnyWallpapers.Views"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:controls="clr-namespace:AnyWallpapers.Controls"
-        mc:Ignorable="d"
-        Title="MainView" Height="350" Width="525"
-        >
+        Title="MainView"
+        Width="525"
+        Height="350"
+        mc:Ignorable="d">
     <Window.Resources>
         <Thickness x:Key="MarginSettings">3,3,3,0</Thickness>
     </Window.Resources>
     <Window.DataContext>
-        <viewModels:MainViewModel/>
+        <viewModels:MainViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <controls:ScreensViewer Grid.Row="0" 
-                                x:Name="ScreensViewer"/>
+        <controls:ScreensViewer x:Name="ScreensViewer"
+                                Grid.Row="0"
+                                SelectedItem="{Binding SelectedScreen}" />
         <GroupBox Grid.Row="1" Padding="3">
             <StackPanel>
-                <TextBlock Text="Type of content"></TextBlock>
+                <TextBlock Text="Type of content" />
                 <ComboBox Margin="{StaticResource MarginSettings}">
                     <ComboBoxItem>Application</ComboBoxItem>
                     <ComboBoxItem>Video</ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
+                    <ComboBoxItem />
                 </ComboBox>
-                <Button Margin="{StaticResource MarginSettings}" Content="Browse"></Button>
-                <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:"/>
-                <ComboBox Margin="{StaticResource MarginSettings}" 
-                          IsSynchronizedWithCurrentItem="True">
+                <Button Margin="{StaticResource MarginSettings}" Content="Browse" />
+                <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:" />
+                <ComboBox Margin="{StaticResource MarginSettings}" IsSynchronizedWithCurrentItem="True">
                     <system:String>Center</system:String>
                     <system:String>Tile</system:String>
                     <system:String>Fit</system:String>
@@ -44,10 +45,11 @@
                     <system:String>Stretch</system:String>
                     <system:String>Custom</system:String>
                 </ComboBox>
-                <CheckBox Margin="{StaticResource MarginSettings}" Content="Single content"></CheckBox>
+                <CheckBox Margin="{StaticResource MarginSettings}" Content="Single content" />
             </StackPanel>
         </GroupBox>
-        <Button Margin="3" Grid.Row="2" Content="Apply"/>
-     
+        <Button Grid.Row="2"
+                Margin="3"
+                Content="Apply" />
     </Grid>
 </Window>

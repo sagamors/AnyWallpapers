@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace AnyWallpapers.Controls
 { 
@@ -134,10 +135,19 @@ namespace AnyWallpapers.Controls
             "IsSelected", typeof (bool), typeof (ScreenItem), new PropertyMetadata(default(bool), (o, args) =>
             {
                 var control = (ScreenItem) o;
+                var selectedContainer = control.GetSelectedScreenItemFromItem();
+
                 if (control.IsSelected)
                 {
-                    control.ParentScreensViewer.SelectedItem = control;
+                    if (selectedContainer != null)
+                        selectedContainer.IsSelected = false;
+                    control.ParentScreensViewer.SelectedItem = control.DataContext;
                 }
+                else
+                {
+                    control.ParentScreensViewer.SelectedItem = null;
+                }
+                control.IsChecked = control.IsSelected;
             }));
 
         public bool IsSelected
@@ -146,21 +156,72 @@ namespace AnyWallpapers.Controls
             set { SetValue(IsSelectedProperty, value); }
         }
 
-        private ScreensViewer ParentScreensViewer
+        internal ScreensViewer ParentScreensViewer
+        {
+            get { return VisualTreeHelperEx.FindParent<ScreensViewer>(this); }
+        }
+
+        internal ItemsControl ParentItemsControl
         {
             get
             {
-                return ParentSelector as ScreensViewer;
+                return ItemsControl.ItemsControlFromItemContainer(VisualTreeHelper.GetParent(this));
             }
         }
 
-        internal Control ParentSelector
-        {
-            get
-            {
-                return ItemsControl.ItemsControlFromItemContainer(this) as Control;
-            }
-        }
+        /*        ///<summary>
+                /// Return the ItemsControl that owns the given container element
+                ///</summary>
+                public static ItemsControl ItemsControlFromItemContainer(DependencyObject container)
+                {
+                    UIElement ui = container as UIElement;
+                    if (ui == null)
+                        return null;
+
+                    // ui appeared in items collection
+                    ItemsControl ic = LogicalTreeHelper.GetParent(ui) as ItemsControl;
+                    if (ic != null)
+                    {
+                        // this is the right ItemsControl as long as the item
+                        // is (or is eligible to be) its own container
+                        //IGeneratorHost host = ic as IGeneratorHost;
+                        //if (host.IsItemItsOwnContainer(ui))
+                            return ic;
+                        /*else
+                            return null;#1#
+                    }
+
+                    ui = VisualTreeHelper.GetParent(ui) as UIElement;
+
+                    return GetItemsOwner(ui);
+                }
+                /// </summary>
+                public static ItemsControl GetItemsOwner(DependencyObject element)
+                {
+                    ItemsControl container = null;
+                    Panel panel = element as Panel;
+
+                    if (panel != null && panel.IsItemsHost)
+                    {
+                        // see if element was generated for an ItemsPresenter
+                        /*
+                        ItemsPresenter ip = ItemsPresenter.FromPanel(panel);
+
+                        if (ip != null)
+                        {
+                            // if so use the element whose style begat the ItemsPresenter
+                            container = ip.Owner;
+                        }
+                        else
+                        {
+                            // otherwise use element's templated parent
+                            container = panel.TemplatedParent as ItemsControl;
+                        }
+                        #1#
+                    }
+
+                    return container;
+                }*/
 
         public double YOffset
         {
@@ -171,13 +232,22 @@ namespace AnyWallpapers.Controls
         public ScreenItem()
         {
             Checked += ScreenItem_Checked;
+            Unchecked += ScreenItem_Unchecked;
+        }
+
+        private void ScreenItem_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (IsChecked.HasValue && !IsChecked.Value)
+            {
+                IsSelected = false;
+            }
         }
 
         private void ScreenItem_Checked(object sender, RoutedEventArgs e)
         {
             if (IsChecked.HasValue && IsChecked.Value)
             {
-                ParentScreensViewer.SelectedItem = this;
+                IsSelected = true;
             }
         }
 
@@ -194,6 +264,17 @@ namespace AnyWallpapers.Controls
         public void CalcY()
         {
             Y = Math.Abs((-YOffset + ScreenY) / Scale);
+        }
+
+        private ScreenItem GetSelectedScreenItemFromItem()
+        {
+            if (ParentScreensViewer.SelectedItem == null) return null;
+            var screenItem = ParentScreensViewer.SelectedItem as ScreenItem;
+            if (screenItem != null)
+            {
+                return screenItem;
+            }
+            return VisualTreeHelper.GetChild(ParentItemsControl.ItemContainerGenerator.ContainerFromItem(ParentScreensViewer.SelectedItem),0) as ScreenItem;
         }
     }
 }

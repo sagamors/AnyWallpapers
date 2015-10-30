@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -103,14 +104,22 @@ namespace AnyWallpapers.Controls
         public ScreensViewer()
         {
             Items = new ObservableCollection<Screen>();
+
             foreach (var screen in Screen.AllScreens)
             {
                 Items.Add(screen);
             }
+
             SizeChanged += ScreensView_SizeChanged;
             SystemEventsOnDisplaySettingsChanged(null, null);
             SystemEvents.DisplaySettingsChanged += SystemEventsOnDisplaySettingsChanged;
             Items.CollectionChanged += Items_CollectionChanged;
+            Loaded += ScreensViewer_Loaded;
+        }
+
+        private void ScreensViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+           // var container = _itemsControl.ItemContainerGenerator.ContainerFromItem(Items.First());
         }
 
         ItemsControl _itemsControl;
@@ -124,7 +133,7 @@ namespace AnyWallpapers.Controls
 
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-           SetOrigin();
+            SetOrigin();
         }
 
         private void ScreensView_SizeChanged(object sender, SizeChangedEventArgs e)
