@@ -9,8 +9,9 @@
         xmlns:viewModels="clr-namespace:AnyWallpapers.ViewModels"
         xmlns:views="clr-namespace:AnyWallpapers.Views"
         Title="MainView"
-        Width="525"
-        Height="350"
+        Width="613"
+        Height="475"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
     <Window.Resources>
         <Thickness x:Key="MarginSettings">3,3,3,0</Thickness>
@@ -30,12 +31,15 @@
         <GroupBox Grid.Row="1" Padding="3">
             <StackPanel>
                 <TextBlock Text="Type of content" />
-                <ComboBox Margin="{StaticResource MarginSettings}">
-                    <ComboBoxItem>Application</ComboBoxItem>
-                    <ComboBoxItem>Video</ComboBoxItem>
-                    <ComboBoxItem />
-                </ComboBox>
-                <Button Margin="{StaticResource MarginSettings}" Content="Browse" />
+                <ComboBox x:Name="ContentComboBox"
+                          Margin="{StaticResource MarginSettings}"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding ContentViewModels}"
+                          SelectedItem="{Binding SelectedContentViewModel}" />
+                <Button Margin="{StaticResource MarginSettings}"
+                        Command="{Binding ElementName=ContentComboBox,
+                                          Path=SelectedItem.ShowLoadDialogCommand}"
+                        Content="Browse" />
                 <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:" />
                 <ComboBox Margin="{StaticResource MarginSettings}" IsSynchronizedWithCurrentItem="True">
                     <system:String>Center</system:String>

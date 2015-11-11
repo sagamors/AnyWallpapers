@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ScreensViewer.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="ViewModels\IContentViewModel.cs" />
     <Compile Include="VisualTreeHelper.cs" />
     <Compile Include="Views\ScreensView.xaml.cs">
       <DependentUpon>ScreensView.xaml</DependentUpon>
@@ -123,9 +125,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
