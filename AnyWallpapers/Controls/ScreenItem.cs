@@ -62,6 +62,15 @@ namespace AnyWallpapers.Controls
             set { SetValue(ScaleProperty, value); }
         }
 
+        public static readonly DependencyProperty PictureProperty = DependencyProperty.Register(
+            "Picture", typeof (Image), typeof (ScreenItem), new PropertyMetadata(default(Image)));
+
+        public Image Picture
+        {
+            get { return (Image) GetValue(PictureProperty); }
+            set { SetValue(PictureProperty, value); }
+        }
+
         internal ScreensViewer ScreensViewer { get; set; }
 
      /*   internal static readonly DependencyPropertyKey XKey = DependencyProperty.RegisterReadOnly("X", typeof(double), typeof(ScreenItem), new PropertyMetadata(double.NaN,
@@ -128,7 +137,7 @@ namespace AnyWallpapers.Controls
             "YOffset", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double), (o, args) =>
             {
                 var control = (ScreenItem)o;
-                control.CalcX();
+                control.CalcY();
             }));
 
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(

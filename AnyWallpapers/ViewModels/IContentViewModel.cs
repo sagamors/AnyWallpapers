@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using AnyWallpapers.Helpers;
 using Microsoft.Win32;
 
@@ -25,31 +25,60 @@ namespace AnyWallpapers.ViewModels
         string Filter { get; }
         ePosition Position { set; get; }
         ICommand ShowLoadDialogCommand { get; }
+        string FullPath { get; }
+        Image Picture { get; }
     }
 
-    class FromFileContentViewModel : IContentViewModel
+    abstract class  ContentViewModelBase : IContentViewModel
     {
-        public string FullPath { private set; get; }
-        public string Name { get; }
-        public string Filter { get; }
-        public ePosition Position { get; set; }
-        public ICommand ShowLoadDialogCommand { get; }
+        public string Name { protected set;get; }
+        public string Filter { protected set; get; }
+        public ePosition Position { set; get; }
+        public ICommand ShowLoadDialogCommand { protected set; get; }
+        public string FullPath { protected set; get; }
+        public Image Picture { protected set;get; }
 
-        public FromFileContentViewModel()
+        public ContentViewModelBase()
         {
-            Name = "From file";
-            Filter = "";
             ShowLoadDialogCommand = new RelayCommand(o => ShowLoadDialog());
         }
 
-        public void ShowLoadDialog()
+        public virtual void ShowLoadDialog()
         {
             var ofd = new OpenFileDialog();
             ofd.Filter = Filter;
-            var isOpen =ofd.ShowDialog();
+            var isOpen = ofd.ShowDialog();
             if (isOpen != null && isOpen.Value)
             {
                 FullPath = ofd.FileName;
+            }
+        }
+    }
+
+    class RunFileContentViewModel : ContentViewModelBase
+    {
+        public RunFileContentViewModel()
+        {
+            Name = "From file";
+            Filter = "All files (*.*)|*.*";
+        }
+    }
+
+    internal class ImageContentViewModel : ContentViewModelBase
+    {
+        public ImageContentViewModel()
+        {
+            Name = "Image";
+            Filter = "Images (*.jpg,*.jpeg,*.png,*.bmp,)|*.jpg;*.jpeg,*.png,*.bmp";
+        }
+
+        public override void ShowLoadDialog()
+        {
+            base.ShowLoadDialog();
+            if (File.Exists(FullPath))
+            {
+                ImageSource imageSource = new BitmapImage(new Uri(FullPath));
+                Picture.Source = imageSource;
             }
         }
     }

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media.Imaging;
-using AnyWallpapers.Controls;
+﻿using System.Windows;
 using AnyWallpapers.ViewModels;
 
 namespace AnyWallpapers.Views

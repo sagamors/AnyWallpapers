@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -109,12 +108,6 @@ namespace AnyWallpapers.Controls
             {
                 Items.Add(screen);
             }
-
-            SizeChanged += ScreensView_SizeChanged;
-            SystemEventsOnDisplaySettingsChanged(null, null);
-            SystemEvents.DisplaySettingsChanged += SystemEventsOnDisplaySettingsChanged;
-            Items.CollectionChanged += Items_CollectionChanged;
-            Loaded += ScreensViewer_Loaded;
         }
 
         private void ScreensViewer_Loaded(object sender, RoutedEventArgs e)
@@ -128,6 +121,11 @@ namespace AnyWallpapers.Controls
             _itemsControl = (GetTemplateChild("PART_ItemsControl") as ItemsControl);
             SystemHeight = SystemParameters.VirtualScreenHeight;
             SystemWidth = SystemParameters.VirtualScreenWidth;
+            SizeChanged += ScreensView_SizeChanged;
+            SystemEventsOnDisplaySettingsChanged(null, null);
+            SystemEvents.DisplaySettingsChanged += SystemEventsOnDisplaySettingsChanged;
+            Items.CollectionChanged += Items_CollectionChanged;
+            Loaded += ScreensViewer_Loaded;
             base.OnApplyTemplate();
         }
 
@@ -157,13 +155,9 @@ namespace AnyWallpapers.Controls
 
         private void SystemEventsOnDisplaySettingsChanged(object sender, EventArgs eventArgs)
         {
-            //if (Screen.AllScreens.Length > AlternationCount)
-            //{
-            //    AlternationCount = Screen.AllScreens.Length;
-            //    CalcScale();
-            //}
-
-            // Items = new ObservableCollection<Screen>(Screen.AllScreens);
+            Items = new ObservableCollection<Screen>(Screen.AllScreens);
+            CalcScale();
+            SetOrigin();
         }
 
         private void SetOrigin()

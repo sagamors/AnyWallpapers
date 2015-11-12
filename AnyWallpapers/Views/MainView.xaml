@@ -27,7 +27,8 @@
         </Grid.RowDefinitions>
         <controls:ScreensViewer x:Name="ScreensViewer"
                                 Grid.Row="0"
-                                SelectedItem="{Binding SelectedScreen}" />
+                                SelectedItem="{Binding SelectedScreen}" 
+                                />
         <GroupBox Grid.Row="1" Padding="3">
             <StackPanel>
                 <TextBlock Text="Type of content" />
