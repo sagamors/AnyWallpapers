@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -49,12 +48,21 @@ namespace AnyWallpapers.Controls
         }
 
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
-            "SelectedItem", typeof (object), typeof (ScreensViewer), new PropertyMetadata(default(object)));
+            "SelectedItem", typeof (ScreenViewModel), typeof (ScreensViewer), new PropertyMetadata(default(ScreenViewModel)));
 
-        public object SelectedItem
+        public ScreenViewModel SelectedItem
         {
-            get { return (object) GetValue(SelectedItemProperty); }
+            get { return (ScreenViewModel) GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedScreenItemProperty = DependencyProperty.Register(
+            "SelectedScreenItem", typeof (ScreenItem), typeof (ScreensViewer), new PropertyMetadata(default(ScreenItem)));
+
+        public ScreenItem SelectedScreenItem
+        {
+            get { return (ScreenItem) GetValue(SelectedScreenItemProperty); }
+            set { SetValue(SelectedScreenItemProperty, value); }
         }
 
         public static readonly DependencyProperty OriginXOffsetProperty = DependencyProperty.Register(
@@ -110,17 +118,6 @@ namespace AnyWallpapers.Controls
             {
                 Items.Add(new ScreenViewModel(screen));
             }
-
-            SizeChanged += ScreensView_SizeChanged;
-            SystemEventsOnDisplaySettingsChanged(null, null);
-            SystemEvents.DisplaySettingsChanged += SystemEventsOnDisplaySettingsChanged;
-            Items.CollectionChanged += Items_CollectionChanged;
-            Loaded += ScreensViewer_Loaded;
-        }
-
-        private void ScreensViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-           // var container = _itemsControl.ItemContainerGenerator.ContainerFromItem(Items.First());
         }
 
         ItemsControl _itemsControl;
@@ -129,6 +126,10 @@ namespace AnyWallpapers.Controls
             _itemsControl = (GetTemplateChild("PART_ItemsControl") as ItemsControl);
             SystemHeight = SystemParameters.VirtualScreenHeight;
             SystemWidth = SystemParameters.VirtualScreenWidth;
+            SizeChanged += ScreensView_SizeChanged;
+            SystemEventsOnDisplaySettingsChanged(null, null);
+            SystemEvents.DisplaySettingsChanged += SystemEventsOnDisplaySettingsChanged;
+            Items.CollectionChanged += Items_CollectionChanged;
             base.OnApplyTemplate();
         }
 
@@ -146,25 +147,19 @@ namespace AnyWallpapers.Controls
         {
             double widthScale = SystemParameters.VirtualScreenWidth / (ActualWidth - (Padding.Left + Padding.Right));
             double heightScale = SystemParameters.VirtualScreenHeight / (ActualHeight - (Padding.Top + Padding.Bottom));
-            if (widthScale > heightScale)
-            {
-                Scale = widthScale;
-            }
-            else
-            {
-                Scale = heightScale;
-            }
+            Scale = widthScale > heightScale ? widthScale : heightScale;
         }
 
         private void SystemEventsOnDisplaySettingsChanged(object sender, EventArgs eventArgs)
         {
-            //if (Screen.AllScreens.Length > AlternationCount)
-            //{
-            //    AlternationCount = Screen.AllScreens.Length;
-            //    CalcScale();
-            //}
-
-            // Items = new ObservableCollection<Screen>(Screen.AllScreens);
+            var items = new ObservableCollection<ScreenViewModel>();
+            foreach (var screen in Screen.AllScreens)
+            {
+                items.Add(new ScreenViewModel(screen));
+            }
+            Items = items;
+            CalcScale();
+            SetOrigin();
         }
 
         private void SetOrigin()

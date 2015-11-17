@@ -34,16 +34,15 @@
                 <ComboBox x:Name="ContentComboBox"
                           Margin="{StaticResource MarginSettings}"
                           DisplayMemberPath="Name"
-                          ItemsSource="{Binding ContentViewModels}"
-                          SelectedItem="{Binding SelectedContentViewModel}" />
+                          ItemsSource="{Binding SelectedScreen.ContentCollection}"
+                          SelectedItem="{Binding SelectedScreen.Content}" />
+
                 <Button Margin="{StaticResource MarginSettings}"
                         Command="{Binding ElementName=ContentComboBox,
                                           Path=SelectedItem.ShowLoadDialogCommand}"
                         Content="Browse" />
                 <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:" />
-                <ComboBox Margin="{StaticResource MarginSettings}"
-                          IsSynchronizedWithCurrentItem="True"
-                          ItemsSource="{Binding SelectedScreen.}">
+                <ComboBox Margin="{StaticResource MarginSettings}" IsSynchronizedWithCurrentItem="True">
                     <system:String>Center</system:String>
                     <system:String>Tile</system:String>
                     <system:String>Fit</system:String>

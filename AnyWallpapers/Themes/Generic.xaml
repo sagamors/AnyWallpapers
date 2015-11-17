@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:AnyWallpapers.Controls"
                     xmlns:local="clr-namespace:AnyWallpapers"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-
     <SolidColorBrush x:Key="ScreenItem.Background.Color" Color="DeepSkyBlue" />
     <SolidColorBrush x:Key="ScreenItem.Border.Color" Color="DodgerBlue" />
     <SolidColorBrush x:Key="ScreenItem.Text.Color" Color="GhostWhite" />
@@ -55,7 +54,8 @@
                         <ItemsControl x:Name="PART_ItemsControl"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      AlternationCount="100"
+                                      AlternationCount="{Binding Items.Count,
+                                                                 RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                       ItemsSource="{Binding Items,
                                                             RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <ItemsControl.ItemsPanel>
@@ -78,15 +78,18 @@
                                         <controls:ScreenItem.RenderTransform>
                                             <TranslateTransform X="{Binding Path=X, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" Y="{Binding Path=Y, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" />
                                         </controls:ScreenItem.RenderTransform>
-                                        <Label HorizontalContentAlignment="Center"
-                                               VerticalContentAlignment="Center"
-                                               BorderThickness="{StaticResource ScreenItem.Border.Thickness}"
-                                               Content="{Binding Path=(ItemsControl.AlternationIndex),
-                                                                 Mode=OneWay,
-                                                                 RelativeSource={RelativeSource AncestorLevel=2,
-                                                                                                Mode=FindAncestor,
-                                                                                                AncestorType=ContentPresenter}}"
-                                               Foreground="{StaticResource ScreenItem.Text.Color}" />
+                                        <Grid>
+                                            <Label HorizontalContentAlignment="Center"
+                                                   VerticalContentAlignment="Center"
+                                                   BorderThickness="{StaticResource ScreenItem.Border.Thickness}"
+                                                   Content="{Binding Path=(ItemsControl.AlternationIndex),
+                                                                     Mode=OneWay,
+                                                                     RelativeSource={RelativeSource AncestorLevel=2,
+                                                                                                    Mode=FindAncestor,
+                                                                                                    AncestorType=ContentPresenter}}"
+                                                   Foreground="{StaticResource ScreenItem.Text.Color}" />
+                                        </Grid>
+
                                     </controls:ScreenItem>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

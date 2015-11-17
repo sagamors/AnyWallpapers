@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using AnyWallpapers.ViewModels;
 
 namespace AnyWallpapers.Controls
 { 
@@ -62,36 +63,16 @@ namespace AnyWallpapers.Controls
             set { SetValue(ScaleProperty, value); }
         }
 
+        public static readonly DependencyProperty PictureProperty = DependencyProperty.Register(
+            "Picture", typeof (Image), typeof (ScreenItem), new PropertyMetadata(default(Image)));
+
+        public Image Picture
+        {
+            get { return (Image) GetValue(PictureProperty); }
+            set { SetValue(PictureProperty, value); }
+        }
+
         internal ScreensViewer ScreensViewer { get; set; }
-
-     /*   internal static readonly DependencyPropertyKey XKey = DependencyProperty.RegisterReadOnly("X", typeof(double), typeof(ScreenItem), new PropertyMetadata(double.NaN,
-            (o, args) =>
-            {
-/*                var control = (ScreenItem) o;
-                Canvas.SetLeft(control, control.X);#1#
-            }));
-        public static readonly DependencyProperty XProperty = XKey.DependencyProperty;
-
-        public double X
-        {
-            get { return (double)GetValue(XProperty); }
-            protected set { SetValue(XKey, value); }
-        }*/
-/*
-        internal static readonly DependencyPropertyKey YKey = DependencyProperty.RegisterReadOnly("Y", typeof(double), typeof(ScreenItem), new PropertyMetadata(double.NaN,
-            (o, args) =>
-            {
-/*                var control = (ScreenItem)o;
-                Canvas.SetTop(control, control.Y);#1#
-            }));
-
-        public static readonly DependencyProperty YProperty = YKey.DependencyProperty;
-
-        public double Y
-        {
-            get { return (double)GetValue(YProperty); }
-            protected set { SetValue(YKey, value); }
-        }*/
 
         public static readonly DependencyProperty XProperty = DependencyProperty.Register(
             "X", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double)));
@@ -128,7 +109,7 @@ namespace AnyWallpapers.Controls
             "YOffset", typeof (double), typeof (ScreenItem), new PropertyMetadata(default(double), (o, args) =>
             {
                 var control = (ScreenItem)o;
-                control.CalcX();
+                control.CalcY();
             }));
 
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
@@ -141,11 +122,12 @@ namespace AnyWallpapers.Controls
                 {
                     if (selectedContainer != null)
                         selectedContainer.IsSelected = false;
-                    control.ParentScreensViewer.SelectedItem = control.DataContext;
+                    // todo fix
+                    control.ParentScreensViewer.SetValue(ScreensViewer.SelectedItemProperty, (ScreenViewModel)control.DataContext);
                 }
                 else
                 {
-                    control.ParentScreensViewer.SelectedItem = null;
+                    control.ParentScreensViewer.SetValue(ScreensViewer.SelectedItemProperty, null);
                 }
                 control.IsChecked = control.IsSelected;
             }));
@@ -269,7 +251,7 @@ namespace AnyWallpapers.Controls
         private ScreenItem GetSelectedScreenItemFromItem()
         {
             if (ParentScreensViewer.SelectedItem == null) return null;
-            var screenItem = ParentScreensViewer.SelectedItem as ScreenItem;
+            var screenItem = ParentScreensViewer.SelectedScreenItem as ScreenItem;
             if (screenItem != null)
             {
                 return screenItem;
