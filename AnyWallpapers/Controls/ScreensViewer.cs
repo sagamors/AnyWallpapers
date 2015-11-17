@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using AnyWallpapers.ViewModels;
 using Microsoft.Win32;
 using Control = System.Windows.Controls.Control;
 
@@ -31,19 +32,19 @@ namespace AnyWallpapers.Controls
         }
 
         public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(
-            "Items", typeof(ObservableCollection<Screen>), typeof(ScreensViewer), new PropertyMetadata(default(ObservableCollection<Screen>),
+            "Items", typeof(ObservableCollection<ScreenViewModel>), typeof(ScreensViewer), new PropertyMetadata(default(ObservableCollection<ScreenViewModel>),
                 (o, args) =>
                 {
                     var control = (ScreensViewer)o;
-                    var newCollection =  args.NewValue as ObservableCollection<Screen>;
-                    var oldCollection = args.OldValue as ObservableCollection<Screen>;
+                    var newCollection =  args.NewValue as ObservableCollection<ScreenViewModel>;
+                    var oldCollection = args.OldValue as ObservableCollection<ScreenViewModel>;
                     if (newCollection != null) newCollection.CollectionChanged += control.Items_CollectionChanged;
                     if (oldCollection != null) oldCollection.CollectionChanged -= control.Items_CollectionChanged;
                 }));
 
-        public ObservableCollection<Screen> Items
+        public ObservableCollection<ScreenViewModel> Items
         {
-            get { return (ObservableCollection<Screen>)GetValue(ItemsProperty); }
+            get { return (ObservableCollection<ScreenViewModel>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
 
@@ -103,11 +104,11 @@ namespace AnyWallpapers.Controls
 
         public ScreensViewer()
         {
-            Items = new ObservableCollection<Screen>();
+            Items = new ObservableCollection<ScreenViewModel>();
 
             foreach (var screen in Screen.AllScreens)
             {
-                Items.Add(screen);
+                Items.Add(new ScreenViewModel(screen));
             }
 
             SizeChanged += ScreensView_SizeChanged;
@@ -173,14 +174,14 @@ namespace AnyWallpapers.Controls
             foreach (var screen in Items)
             {
                 //We find the right and the top point.
-                if (screen.Bounds.Left < origin.X)
+                if (screen.Origin.X < origin.X)
                 {
-                    origin.X = screen.Bounds.Left;
+                    origin.X = screen.Origin.X;
                 }
 
-                if (screen.Bounds.Top < origin.Y)
+                if (screen.Origin.Y < origin.Y)
                 {
-                    origin.Y = screen.Bounds.Top;
+                    origin.Y = screen.Origin.Y;
                 }
             }
 

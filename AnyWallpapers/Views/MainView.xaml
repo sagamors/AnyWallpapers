@@ -41,7 +41,9 @@
                                           Path=SelectedItem.ShowLoadDialogCommand}"
                         Content="Browse" />
                 <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:" />
-                <ComboBox Margin="{StaticResource MarginSettings}" IsSynchronizedWithCurrentItem="True">
+                <ComboBox Margin="{StaticResource MarginSettings}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding SelectedScreen.}">
                     <system:String>Center</system:String>
                     <system:String>Tile</system:String>
                     <system:String>Fit</system:String>

@@ -6,7 +6,6 @@ namespace AnyWallpapers.ViewModels
 {
    public  class MainViewModel : ViewModelBase
     {
-/*        public static MainViewModel Instance { get; } = new MainViewModel();*/
         public ScreenViewModel SelectedScreen { set; get; }
         public ObservableCollection<ScreenViewModel> ScreenViewModels { get; } = new ObservableCollection<ScreenViewModel>();
         public ObservableCollection<IContentViewModel> ContentViewModels { get; } = new ObservableCollection<IContentViewModel>(); 
@@ -15,7 +14,7 @@ namespace AnyWallpapers.ViewModels
         {
             foreach (var screen in Screen.AllScreens)
             {
-                ScreenViewModels.Add(new ScreenViewModel(screen,null));
+                ScreenViewModels.Add(new ScreenViewModel(screen));
             }
             ContentViewModels.Add(new FromFileContentViewModel());
 

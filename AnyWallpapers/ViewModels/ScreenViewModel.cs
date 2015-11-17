@@ -18,9 +18,10 @@ namespace AnyWallpapers.ViewModels
         // \\todo запоминать
         public Point Origin => new Point(Screen.Bounds.Left, Screen.Bounds.Top);
 
-        public IDispayedContent Content { get; }
+        public IContentViewModel Content { get; }
 
         public ePositionType PositionType { get; }
+
         public enum ePositionType
         {
             Center,
@@ -31,13 +32,10 @@ namespace AnyWallpapers.ViewModels
             Custom,
         }
 
-        public ScreenViewModel(Screen screen, IDispayedContent content)
+        public ScreenViewModel(Screen screen)
         {
             Screen = screen;
-            Content = content;
         }
-
-
     }
 
     public interface IDispayedContent

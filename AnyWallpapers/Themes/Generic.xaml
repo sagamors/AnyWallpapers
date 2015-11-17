@@ -67,10 +67,10 @@
                                 <DataTemplate>
                                     <controls:ScreenItem Scale="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
                                                                          Path=Scale}"
-                                                         ScreenHeight="{Binding Bounds.Height}"
-                                                         ScreenWidth="{Binding Bounds.Width}"
-                                                         ScreenX="{Binding Bounds.X}"
-                                                         ScreenY="{Binding Bounds.Y}"
+                                                         ScreenHeight="{Binding Height}"
+                                                         ScreenWidth="{Binding Width}"
+                                                         ScreenX="{Binding Origin.X}"
+                                                         ScreenY="{Binding Origin.Y}"
                                                          XOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
                                                                            Path=OriginXOffset}"
                                                          YOffset="{Binding RelativeSource={RelativeSource AncestorType=controls:ScreensViewer},
