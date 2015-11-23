@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -36,9 +37,15 @@ namespace AnyWallpapers.Controls
                 {
                     var control = (ScreensViewer)o;
                     var newCollection =  args.NewValue as ObservableCollection<ScreenViewModel>;
+                    var first =newCollection.FirstOrDefault();
+                    if (first != null)
+                    {
+                        first.IsSelected = true;
+                    }
                     var oldCollection = args.OldValue as ObservableCollection<ScreenViewModel>;
                     if (newCollection != null) newCollection.CollectionChanged += control.Items_CollectionChanged;
                     if (oldCollection != null) oldCollection.CollectionChanged -= control.Items_CollectionChanged;
+
                 }));
 
         public ObservableCollection<ScreenViewModel> Items

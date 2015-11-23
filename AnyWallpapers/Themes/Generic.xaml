@@ -7,10 +7,10 @@
     <SolidColorBrush x:Key="ScreenItem.Border.Color" Color="DodgerBlue" />
     <SolidColorBrush x:Key="ScreenItem.Text.Color" Color="GhostWhite" />
     <SolidColorBrush x:Key="ScreenItem.Backgound.MouseOver"
-                     Opacity="1.0"
+                     Opacity="0.5"
                      Color="DarkGray" />
     <SolidColorBrush x:Key="ScreenItem.Backgound.Selected"
-                     Opacity="1.0"
+                     Opacity="0.5"
                      Color="LightSkyBlue" />
 
     <Thickness x:Key="ScreenItem.Border.Thickness"
@@ -21,6 +21,7 @@
 
     <Style TargetType="{x:Type controls:ScreenItem}">
         <Setter Property="Background" Value="{StaticResource ScreenItem.Background.Color}" />
+        <Setter Property="IsChecked" Value="{Binding IsSelected}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ScreenItem}">
@@ -28,14 +29,23 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter />
+                        <Grid>
+
+                            <ContentPresenter />
+                            <Border x:Name="Top_Border" />
+                        </Grid>
+
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.MouseOver}" />
+                        <!--<Trigger Property="IsMouseOver" Value="true">
+                               <Setter TargetName="Top_Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.MouseOver}" />
+                             </Trigger>-->
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="Top_Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.Selected}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ScreenItem.Backgound.Selected}" />
+                            <Setter TargetName="Top_Border" Property="BorderThickness" Value="2" />
+                            <Setter TargetName="Top_Border" Property="BorderBrush" Value="DarkBlue" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -79,6 +89,15 @@
                                             <TranslateTransform X="{Binding Path=X, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" Y="{Binding Path=Y, RelativeSource={RelativeSource AncestorType=controls:ScreenItem}}" />
                                         </controls:ScreenItem.RenderTransform>
                                         <Grid>
+                                            <Viewbox>
+                                                <Canvas Width="{Binding Width}" Height="{Binding Height}">
+                                                    <ContentPresenter Canvas.Left="{Binding Content.X}"
+                                                                      Canvas.Top="{Binding Content.Y}"
+                                                                      Width="{Binding Width}"
+                                                                      Height="{Binding Height}"
+                                                                      Content="{Binding Content.Picture}" />
+                                                </Canvas>
+                                            </Viewbox>
                                             <Label HorizontalContentAlignment="Center"
                                                    VerticalContentAlignment="Center"
                                                    BorderThickness="{StaticResource ScreenItem.Border.Thickness}"
@@ -89,7 +108,6 @@
                                                                                                     AncestorType=ContentPresenter}}"
                                                    Foreground="{StaticResource ScreenItem.Text.Color}" />
                                         </Grid>
-
                                     </controls:ScreenItem>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

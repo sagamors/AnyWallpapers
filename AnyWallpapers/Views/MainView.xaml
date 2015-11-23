@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:AnyWallpapers.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:helpers="clr-namespace:AnyWallpapers.Helpers"
         xmlns:local="clr-namespace:AnyWallpapers"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -27,7 +28,10 @@
         </Grid.RowDefinitions>
         <controls:ScreensViewer x:Name="ScreensViewer"
                                 Grid.Row="0"
-                                SelectedItem="{Binding SelectedScreen}" />
+                                Items="{Binding Items,
+                                                Mode=TwoWay}"
+                                SelectedItem="{Binding SelectedScreen,
+                                                       Mode=TwoWay}" />
         <GroupBox Grid.Row="1" Padding="3">
             <StackPanel>
                 <TextBlock Text="Type of content" />
@@ -42,14 +46,12 @@
                                           Path=SelectedItem.ShowLoadDialogCommand}"
                         Content="Browse" />
                 <TextBlock Margin="{StaticResource MarginSettings}" Text="Object position:" />
-                <ComboBox Margin="{StaticResource MarginSettings}" IsSynchronizedWithCurrentItem="True">
-                    <system:String>Center</system:String>
-                    <system:String>Tile</system:String>
-                    <system:String>Fit</system:String>
-                    <system:String>Fill</system:String>
-                    <system:String>Stretch</system:String>
-                    <system:String>Custom</system:String>
-                </ComboBox>
+                <ComboBox Margin="{StaticResource MarginSettings}"
+                          DisplayMemberPath="Description"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding Source={helpers:Enumeration {x:Type viewModels:ePosition}}}"
+                          SelectedValue="{Binding SelectedScreen.Content.Position}"
+                          SelectedValuePath="Value" />
                 <CheckBox Margin="{StaticResource MarginSettings}" Content="Single content" />
             </StackPanel>
         </GroupBox>

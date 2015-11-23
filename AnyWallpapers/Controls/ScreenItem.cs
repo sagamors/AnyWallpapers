@@ -112,31 +112,21 @@ namespace AnyWallpapers.Controls
                 control.CalcY();
             }));
 
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
-            "IsSelected", typeof (bool), typeof (ScreenItem), new PropertyMetadata(default(bool), (o, args) =>
-            {
-                var control = (ScreenItem) o;
-                var selectedContainer = control.GetSelectedScreenItemFromItem();
-
-                if (control.IsSelected)
-                {
-                    if (selectedContainer != null)
-                        selectedContainer.IsSelected = false;
-                    // todo fix
-                    control.ParentScreensViewer.SetValue(ScreensViewer.SelectedItemProperty, (ScreenViewModel)control.DataContext);
-                }
-                else
-                {
-                    control.ParentScreensViewer.SetValue(ScreensViewer.SelectedItemProperty, null);
-                }
-                control.IsChecked = control.IsSelected;
-            }));
-
-        public bool IsSelected
+        private void ReactToChangeChecked()
         {
-            get { return (bool) GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            var selectedContainer = GetSelectedScreenItemFromItem();
+            if (Equals(selectedContainer, this))
+            {
+                IsChecked = true;
+                return;
+            }
+            if (IsChecked == null || !IsChecked.Value) return;
+            ParentScreensViewer.SetValue(ScreensViewer.SelectedScreenItemProperty, this);
+            ParentScreensViewer.SetValue(ScreensViewer.SelectedItemProperty, (ScreenViewModel)DataContext);
+            if (selectedContainer != null)
+                selectedContainer.IsChecked = false;
         }
+
 
         internal ScreensViewer ParentScreensViewer
         {
@@ -219,18 +209,12 @@ namespace AnyWallpapers.Controls
 
         private void ScreenItem_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (IsChecked.HasValue && !IsChecked.Value)
-            {
-                IsSelected = false;
-            }
+            ReactToChangeChecked();
         }
 
         private void ScreenItem_Checked(object sender, RoutedEventArgs e)
         {
-            if (IsChecked.HasValue && IsChecked.Value)
-            {
-                IsSelected = true;
-            }
+            ReactToChangeChecked();
         }
 
         static ScreenItem()
@@ -250,7 +234,7 @@ namespace AnyWallpapers.Controls
 
         private ScreenItem GetSelectedScreenItemFromItem()
         {
-            if (ParentScreensViewer.SelectedItem == null) return null;
+            if (ParentScreensViewer.SelectedScreenItem == null) return null;
             var screenItem = ParentScreensViewer.SelectedScreenItem as ScreenItem;
             if (screenItem != null)
             {

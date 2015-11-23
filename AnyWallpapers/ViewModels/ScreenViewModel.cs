@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PropertyChanged;
 
@@ -12,17 +13,15 @@ namespace AnyWallpapers.ViewModels
         public Screen Screen { set; get; }
         public double Width => Screen.Bounds.Width;
         public double Height => Screen.Bounds.Height;
-           
-        // \\todo запоминать
         public Point Origin => new Point(Screen.Bounds.Left, Screen.Bounds.Top);
-
         public IContentViewModel Content { set; get; }
         public ObservableCollection<IContentViewModel> ContentCollection { get; } =new ObservableCollection<IContentViewModel>();
         public ScreenViewModel(Screen screen)
         {
             Screen = screen;
-            ContentCollection.Add(new RunFileContentViewModel());
-            ContentCollection.Add(new ImageContentViewModel());
+            ContentCollection.Add(new ImageContentViewModel(this));
+            ContentCollection.Add(new RunFileContentViewModel(this));
+            Content = ContentCollection.FirstOrDefault();
         }
     }
 
