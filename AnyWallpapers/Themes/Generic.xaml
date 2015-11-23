@@ -95,7 +95,7 @@
                                                                       Canvas.Top="{Binding Content.Y}"
                                                                       Width="{Binding Width}"
                                                                       Height="{Binding Height}"
-                                                                      Content="{Binding Content.Picture}" />
+                                                                      Content="{Binding Content.PreviewPicture}" />
                                                 </Canvas>
                                             </Viewbox>
                                             <Label HorizontalContentAlignment="Center"

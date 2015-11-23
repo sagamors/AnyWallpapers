@@ -64,7 +64,7 @@ namespace AnyWallpapers.Controls
         }
 
         public static readonly DependencyProperty PictureProperty = DependencyProperty.Register(
-            "Picture", typeof (Image), typeof (ScreenItem), new PropertyMetadata(default(Image)));
+            "PreviewPicture", typeof (Image), typeof (ScreenItem), new PropertyMetadata(default(Image)));
 
         public Image Picture
         {

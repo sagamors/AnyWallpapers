@@ -49,8 +49,8 @@
                 <ComboBox Margin="{StaticResource MarginSettings}"
                           DisplayMemberPath="Description"
                           IsSynchronizedWithCurrentItem="True"
-                          ItemsSource="{Binding Source={helpers:Enumeration {x:Type viewModels:ePosition}}}"
-                          SelectedValue="{Binding SelectedScreen.Content.Position}"
+                          ItemsSource="{Binding Source={helpers:Enumeration {x:Type viewModels:ePreviewPosition}}}"
+                          SelectedValue="{Binding SelectedScreen.Content.PreviewPosition}"
                           SelectedValuePath="Value" />
                 <CheckBox Margin="{StaticResource MarginSettings}" Content="Single content" />
             </StackPanel>

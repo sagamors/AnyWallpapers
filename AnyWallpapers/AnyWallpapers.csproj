@@ -67,11 +67,11 @@
     <Compile Include="Controls\ScreensViewer.cs" />
     <Compile Include="Helpers\EnumerationExtension.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="ViewModels\ContentViewModelBase.cs" />
     <Compile Include="ViewModels\IContentViewModel.cs" />
+    <Compile Include="ViewModels\ImageContentViewModel.cs" />
+    <Compile Include="ViewModels\RunFileContentViewModel.cs" />
     <Compile Include="VisualTreeHelper.cs" />
-    <Compile Include="Views\ScreensView.xaml.cs">
-      <DependentUpon>ScreensView.xaml</DependentUpon>
-    </Compile>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,10 +92,6 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ScreensView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
