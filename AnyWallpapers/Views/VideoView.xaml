@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AnyWallpapers.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid MouseWheel="Grid_MouseWheel">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

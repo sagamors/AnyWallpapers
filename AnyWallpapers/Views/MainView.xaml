@@ -57,6 +57,8 @@
         </GroupBox>
         <Button Grid.Row="2"
                 Margin="3"
-                Content="Apply" />
+                Content="Apply" 
+                Command="{Binding ApplyCommand}"
+                />
     </Grid>
 </Window>

@@ -25,5 +25,10 @@ namespace AnyWallpapers.ViewModels
                 SetPositionToPreviewPicture(PreviewPosition);
             }
         }
+
+        public override void Apply()
+        {
+            
+        }
     }
 }

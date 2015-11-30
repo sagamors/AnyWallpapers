@@ -6,7 +6,7 @@ namespace AnyWallpapers
 {
     class WindowToWallpapersSetter
     {
-        public void Set(Window window)
+        public void Set(IntPtr handle)
         {
             // Fetch the Progman window
             IntPtr progman = Win32.FindWindow("Progman", null);
@@ -56,8 +56,8 @@ namespace AnyWallpapers
             //            W32.RECT rect = new W32.RECT();
             //            W32.GetWindowRect(workerw, out rect);
             //            Debug.WriteLine(rect);
-            IntPtr ptr = new WindowInteropHelper(window).Handle;
-            Win32.SetParent(ptr, workerw);
+            //IntPtr ptr = new WindowInteropHelper(window).Handle;
+            Win32.SetParent(handle, workerw);
             //Win32.MoveWindow(ptr, 0, 0, (int)Width, (int)Height, true);
         }
     }

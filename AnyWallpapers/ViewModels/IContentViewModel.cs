@@ -39,5 +39,6 @@ namespace AnyWallpapers.ViewModels
         Image PreviewPicture { get; }
         int X { set; get; }
         int Y { set; get; }
+        void  Apply();
     }
 }

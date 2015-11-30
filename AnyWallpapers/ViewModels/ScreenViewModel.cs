@@ -21,6 +21,7 @@ namespace AnyWallpapers.ViewModels
             Screen = screen;
             ContentCollection.Add(new ImageContentViewModel(this));
             ContentCollection.Add(new RunFileContentViewModel(this));
+            ContentCollection.Add(new VideoContentViewModel(this));
             Content = ContentCollection.FirstOrDefault();
         }
     }
